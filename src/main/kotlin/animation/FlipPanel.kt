@@ -36,7 +36,7 @@ fun <T> FlipPanel(
         for ((mapping, state) in states) {
             val (enter, exit, stateContent) = state
             AnimatedVisibility(
-                value == mapping,
+                mapping(value),
                 enter = enter,
                 exit = exit
             ) {

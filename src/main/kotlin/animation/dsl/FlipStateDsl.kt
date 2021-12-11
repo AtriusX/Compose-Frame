@@ -9,13 +9,19 @@ import androidx.compose.runtime.Composable
 @DslMarker
 annotation class FlipStateDsl
 
+typealias MappingFunction<M> =
+    (M) -> Boolean
+
 @FlipStateDsl
-data class FlipMapping<M>(val mapping: M, val state: FlipState)
+data class FlipMapping<M>(
+    val states: MappingFunction<M>,
+    val state: FlipState,
+)
 
 @FlipStateDsl
 data class FlipState(
-    @FlipStateDsl val enter: EnterTransition = fadeIn(),
-    @FlipStateDsl val exit: ExitTransition = fadeOut(),
+    val enter: EnterTransition = fadeIn(),
+    val exit: ExitTransition = fadeOut(),
     val content: @Composable () -> Unit,
 )
 
@@ -33,15 +39,32 @@ data class BuildState<T>(
         vararg mapping: T,
         enter: EnterTransition = fadeIn(),
         exit: ExitTransition = fadeOut(),
-        content: @Composable () -> Unit,
+        content: @Composable () -> Unit
     ) {
-        val state = FlipState(enter, exit, content)
-        mapping.forEach { on(it then state) }
+        val func: MappingFunction<T> = { it in listOf(*mapping) }
+        on(func, enter, exit, content)
     }
 
     @FlipStateDsl
-    infix fun T.then(state: FlipState): FlipMapping<T> =
-        FlipMapping(this, state)
+    fun on(
+        mapping: MappingFunction<T>,
+        enter: EnterTransition = fadeIn(),
+        exit: ExitTransition = fadeOut(),
+        content: @Composable () -> Unit
+    ) {
+        val state = FlipState(enter, exit, content)
+        on(mapping then state)
+    }
+
+    @FlipStateDsl
+    infix fun T.then(state: FlipState): FlipMapping<T> {
+        val func: MappingFunction<T> = { it == this }
+        return func then state
+    }
+
+    @FlipStateDsl
+    private infix fun MappingFunction<T>.then(state: FlipState): FlipMapping<T> =
+        FlipMapping(this, state = state)
 
     @FlipStateDsl
     infix fun base(default: @Composable () -> Unit) {
@@ -54,47 +77,63 @@ fun BuildState<Int>.on(
     range: IntRange,
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
-    content: @Composable () -> Unit
-) = range.forEach {
-    on(it, enter = enter, exit = exit, content = content)
-}
+    content: @Composable () -> Unit,
+) = on(
+    mapping = { it in range },
+    enter = enter,
+    exit = exit,
+    content = content
+)
 
 @FlipStateDsl
 fun BuildState<Long>.on(
     range: LongRange,
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
-    content: @Composable () -> Unit
-) = range.forEach {
-    on(it, enter = enter, exit = exit, content = content)
-}
+    content: @Composable () -> Unit,
+) = on(
+    mapping = { it in range },
+    enter = enter,
+    exit = exit,
+    content = content
+)
 
 @FlipStateDsl
 fun BuildState<Char>.on(
     range: CharRange,
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
-    content: @Composable () -> Unit
-) = range.forEach {
-    on(it, enter = enter, exit = exit, content = content)
-}
+    content: @Composable () -> Unit,
+) = on(
+    mapping = { it in range },
+    enter = enter,
+    exit = exit,
+    content = content
+)
 
 @FlipStateDsl
 fun BuildState<UInt>.on(
     range: UIntRange,
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
-    content: @Composable () -> Unit
-) = range.forEach {
-    on(it, enter = enter, exit = exit, content = content)
-}
+    content: @Composable () -> Unit,
+) = on(
+    mapping = { it in range },
+    enter = enter,
+    exit = exit,
+    content = content
+)
+
 
 @FlipStateDsl
 fun BuildState<ULong>.on(
     range: ULongRange,
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
-    content: @Composable () -> Unit
-) = range.forEach {
-    on(it, enter = enter, exit = exit, content = content)
-}
+    content: @Composable () -> Unit,
+) = on(
+    mapping = { it in range },
+    enter = enter,
+    exit = exit,
+    content = content
+)
