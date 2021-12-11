@@ -62,13 +62,13 @@ fun TitleBarScope.WindowsLayout(
         modifier = Modifier.padding(2.dp, 0.dp).fillMaxWidth().weight(1f),
     )
     Button(onClick = { window.isMinimized = true }, elevation = null) {
-        Text(Windows.Minimize, fontWeight = FontWeight.Bold)
+        Text(Windows.Minimize.icon, fontWeight = FontWeight.Bold)
     }
     Maximize(
         state = windowState
     )
     Button(onClick = { exitProcess(0) }, elevation = null) {
-        Text(Windows.Exit, fontWeight = FontWeight.Bold)
+        Text(Windows.Exit.icon, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -77,11 +77,11 @@ fun TitleBarScope.MacLayout(
     row: RowScope,
 ) = with(row) {
     CircleButton(
-        color = Color(Mac.Exit),
+        color = Color(Mac.Exit.color),
         onClick = { exitProcess(0) }
     )
     CircleButton(
-        color = Color(Mac.Minimize),
+        color = Color(Mac.Minimize.color),
         onClick = { window.isMinimized = true }
     )
     Maximize(

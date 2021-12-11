@@ -44,12 +44,12 @@ fun FrameWindowScope.Maximize(
     ) {
         update(state)
         Text(
-            text = Windows.Maximize(state.value),
+            text = Windows.Maximize(state.value).icon,
             fontWeight = FontWeight.Bold)
     } else {
         update(state)
         CircleButton(
-            color = Color(Mac.Maximize(state.value)),
+            color = Color(Mac.Maximize(state.value).color),
             onClick = { toggleState(state) }
         )
     }
