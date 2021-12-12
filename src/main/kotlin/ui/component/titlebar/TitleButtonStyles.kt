@@ -17,7 +17,7 @@ object TitleButtonStyles {
         }
 
         // X Icon
-        override val Exit: AsciiIcon = AsciiIcon('\uD83D', '\uDFAE')
+        override val Exit: AsciiIcon = AsciiIcon('\uD83D','\uDFAD')
     }
 
     object Mac : TitleButtonStyle<ARGB> {
