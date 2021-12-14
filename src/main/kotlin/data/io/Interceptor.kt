@@ -1,5 +1,7 @@
 package data.io
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import java.io.PrintStream
 
 class Interceptor(private val action: (String) -> Unit) : PrintStream(System.out) {
@@ -24,3 +26,7 @@ class Interceptor(private val action: (String) -> Unit) : PrintStream(System.out
         sysOut.println(obj)
     }
 }
+
+@Composable
+fun rememberInterceptor(block: (String) -> Unit): Interceptor =
+    remember { Interceptor(block) }
