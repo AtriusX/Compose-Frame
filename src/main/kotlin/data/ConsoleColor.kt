@@ -44,14 +44,14 @@ class ConsoleColor(
             ConsoleColor(0xFF00fFFFu, background)
 
         fun of(red: UByte, green: UByte, blue: UByte, background: Boolean = false): ConsoleColor =
+            of(red, green, blue, 255u, background)
+
+        fun of(red: UByte, green: UByte, blue: UByte, alpha: UByte = 0u, background: Boolean = false): ConsoleColor =
             ConsoleColor(
-                run {
-                    var base = 0xFF000000u
-                    base += red.toUInt() shl 16
-                    base += green.toUInt() shl 8
-                    base += blue
-                    base
-                },
+                (alpha.toUInt() shl 24) +
+                (red.toUInt() shl 16) +
+                (green.toUInt() shl 8) +
+                blue,
                 background
             )
     }
@@ -59,15 +59,15 @@ class ConsoleColor(
 
 sealed class ConsoleStyle(private val code: Byte) : ConsoleObject() {
 
-    object RESET : ConsoleStyle(0)
+    object Reset : ConsoleStyle(0)
 
-    object BOLD : ConsoleStyle(1)
+    object Bold : ConsoleStyle(1)
 
-    object ITALIC : ConsoleStyle(3)
+    object Italic : ConsoleStyle(3)
 
-    object UNDERLINE : ConsoleStyle(4)
+    object Underline : ConsoleStyle(4)
 
-    object STRIKETHROUGH : ConsoleStyle(9)
+    object Strikethrough : ConsoleStyle(9)
 
     override fun toString(): String {
         return "$ESCAPE[${code}m"
