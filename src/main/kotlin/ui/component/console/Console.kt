@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import data.io.rememberInterceptor
 import kotlinx.coroutines.launch
+import ui.component.Drawer
 import ui.data.rememberListState
 import java.lang.Integer.max
 
@@ -24,6 +25,7 @@ fun Console(
     background: Color = Color(0xFF222222),
     inputBackground: Color = Color(0xFF151515),
     modifier: Modifier = Modifier,
+    actionBar: @Composable (() -> Unit)? = null
 ) {
     val (messages, update) = rememberListState<String>()
     val state = rememberLazyListState()
@@ -64,7 +66,9 @@ fun Console(
                         state.animateScrollToItem(state.layoutInfo.totalItemsCount - 1)
                     }
                 }
-                ActionDrawer()
+                if (actionBar != null) Drawer {
+                    actionBar()
+                }
             }
         }
     }

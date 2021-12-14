@@ -1,7 +1,5 @@
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -14,9 +12,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.delay
 import ui.ComposableFrame
+import ui.component.console.ButtonAction
 import ui.component.console.Console
 import ui.component.titlebar.DefaultTitleBar
 import ui.component.titlebar.DefaultTitleBarLayout
@@ -66,7 +66,16 @@ fun main() = application {
                 }) {
                     Text("Toggle Console")
                 }
-                Console(visible)
+                Console(visible) {
+                    Row(Modifier.padding(8.dp, 0.dp)) {
+                        repeat(5) {
+                            val i = it + 1
+                            ButtonAction("Action $i") {
+                                println("Clicked action $i!")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
