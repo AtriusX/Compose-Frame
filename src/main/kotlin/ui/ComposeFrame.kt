@@ -12,14 +12,14 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.window.FrameWindowScope
 import androidx.compose.ui.window.Window
 import ui.component.TitleBarArea
-import ui.component.TitleBarComposable
+import ui.component.TitleBarComposition
 import ui.component.rememberFrameState
 import ui.component.titlebar.DefaultTitleBar
 import ui.data.FrameState
 import java.awt.Dimension
 
-typealias WindowComposable =
-        @Composable FrameWindowScope.(MutableState<FrameState>) -> Unit
+typealias WindowComposition =
+    @Composable FrameWindowScope.(MutableState<FrameState>) -> Unit
 
 @Composable
 fun ComposableFrame(
@@ -35,8 +35,8 @@ fun ComposableFrame(
     onKeyEvent: (KeyEvent) -> Boolean = { false },
     minSize: Dimension? = null,
     icon: Painter? = null,
-    titleBar: TitleBarComposable = { DefaultTitleBar(icon = icon) },
-    content: WindowComposable = {},
+    titleBar: TitleBarComposition = { DefaultTitleBar(icon = icon) },
+    content: WindowComposition = {},
 ) {
     Window(
         onCloseRequest = onCloseRequest,

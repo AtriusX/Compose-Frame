@@ -17,7 +17,7 @@ import ui.data.FrameState
 import java.awt.Dimension
 import java.awt.Point
 
-typealias TitleBarComposable =
+typealias TitleBarComposition =
     @Composable TitleBarScope.() -> Unit
 
 interface TitleBarScope : FrameWindowScope {
@@ -37,7 +37,7 @@ fun FrameWindowScope.rememberFrameState(
 fun FrameWindowScope.TitleBarArea(
     windowState: MutableState<FrameState> = rememberFrameState(),
     modifier: Modifier = Modifier,
-    content: TitleBarComposable = {},
+    content: TitleBarComposition = {},
 ) {
     val handler = remember { FrameListener(window, this, windowState) }
     window.isResizable = windowState.value.mode == WindowPlacement.Floating

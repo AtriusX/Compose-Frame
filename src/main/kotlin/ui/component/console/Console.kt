@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import data.io.rememberInterceptor
 import kotlinx.coroutines.launch
 import ui.component.Drawer
+import ui.data.Composition
 import ui.data.rememberListState
 import java.lang.Integer.max
 
@@ -25,7 +26,7 @@ fun Console(
     background: Color = Color(0xFF222222),
     inputBackground: Color = Color(0xFF151515),
     modifier: Modifier = Modifier,
-    actionBar: @Composable (() -> Unit)? = null
+    actionBar: Composition? = null
 ) {
     val (messages, update) = rememberListState<String>()
     val state = rememberLazyListState()

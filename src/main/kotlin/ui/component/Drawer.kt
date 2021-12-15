@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ui.component.SlideDirection.*
+import ui.data.Composition
+import ui.data.ValueComposition
 
 @Suppress("unused")
 enum class SlideDirection {
@@ -58,12 +60,12 @@ fun Drawer(
     background: Color = Color(0xFF222222),
     direction: SlideDirection = Left,
     opened: Boolean = false,
-    button: @Composable (MutableState<Boolean>) -> Unit = { DefaultDrawerButton(it, background, direction = direction) },
     open: EnterTransition = fadeIn() + if (direction == Left || direction == Right)
         expandHorizontally() else expandIn(),
     close: ExitTransition = fadeOut() + if (direction == Left || direction == Right)
         shrinkHorizontally() else shrinkOut(),
-    content: @Composable () -> Unit,
+    button: ValueComposition<MutableState<Boolean>> = { DefaultDrawerButton(it, background, direction = direction) },
+    content: Composition,
 ) {
     val isOpen = remember { mutableStateOf(opened) }
     DisableSelection {
@@ -94,7 +96,7 @@ fun Drawer(
 private fun DirectionalLayout(
     modifier: Modifier = Modifier,
     direction: SlideDirection,
-    content: @Composable () -> Unit,
+    content: Composition,
 ) {
     when (direction) {
         Left, Right -> Row(
