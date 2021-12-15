@@ -3,14 +3,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.application
-import kotlinx.coroutines.delay
 import ui.ComposableFrame
 import ui.component.console.ButtonAction
 import ui.component.console.Console
@@ -22,12 +20,6 @@ fun main() = application {
     val (layout, setLayout) = remember { mutableStateOf(DefaultTitleBarLayout.Windows) }
     val icon = remember { Icon() }
     val (visible, setVisible) = remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        while (true) {
-            println("Egg")
-            delay(500)
-        }
-    }
     ComposableFrame(
         onCloseRequest = ::exitApplication,
         minSize = Dimension(400, 560),
