@@ -29,7 +29,7 @@ fun ListFeed(
 ) {
     LazyColumn(
         state = state,
-        modifier = modifier.padding(10.dp, 0.dp),
+        modifier = modifier.padding(10.dp, 0.dp, 10.dp, 5.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Bottom,
     ) {
@@ -39,7 +39,7 @@ fun ListFeed(
             else
                 Modifier
             Box(
-                modifier = Modifier.fillParentMaxWidth().height(20.dp).then(click)
+                modifier = Modifier.fillParentMaxWidth().height(20.dp) then click
             ) {
                 Text(
                     messages[it],
