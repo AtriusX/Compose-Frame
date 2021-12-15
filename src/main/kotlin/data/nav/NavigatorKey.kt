@@ -1,9 +1,7 @@
 package data.nav
 
-import ui.data.Composition
-
 @Suppress("PropertyName")
-interface NavigatorKey {
+interface NavigatorKey<K> {
 
-    val View: Composition
+    val View: Navigate<K>
 }

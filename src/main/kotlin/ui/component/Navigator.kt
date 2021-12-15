@@ -7,9 +7,9 @@ import data.nav.Navigation
 import data.nav.NavigatorKey
 
 @Composable
-fun <K : NavigatorKey> rememberNavigator(
-    key: K,
+fun <K : NavigatorKey<K>> rememberNavigator(
+    key: K
 ): Navigation<K> {
-    val (_, setState) = remember { mutableStateOf(key) }
-    return Navigation(key.View) { setState(it) }
+    val (state, setState) = remember { mutableStateOf(key) }
+    return Navigation({ state.View(setState) }, setState)
 }
