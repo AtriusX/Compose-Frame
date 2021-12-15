@@ -8,10 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.delay
@@ -21,17 +17,6 @@ import ui.component.console.Console
 import ui.component.titlebar.DefaultTitleBar
 import ui.component.titlebar.DefaultTitleBarLayout
 import java.awt.Dimension
-
-class Icon(
-    private val draw: DrawScope.() -> Unit = {
-        drawCircle(Color(0xFF0099FF))
-    },
-) : Painter() {
-    override val intrinsicSize: Size
-        get() = Size(256f, 256f)
-
-    override fun DrawScope.onDraw() = draw()
-}
 
 fun main() = application {
     val (layout, setLayout) = remember { mutableStateOf(DefaultTitleBarLayout.Windows) }
